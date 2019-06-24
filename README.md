@@ -49,7 +49,7 @@ binary_sensor:
 
 ## Instalation
 
-Download [*binary_sensor.py*](https://github.com/PiotrMachowski/Home-Assistant-custom-components-Burze.dzis.net/raw/master/binary_sensor.py) and [*manifest.json*](https://github.com/PiotrMachowski/Home-Assistant-custom-components-Burze.dzis.net/raw/master/manifest.json) to `config/custom_compoments/burze_dzis_net` folder:
+Download [*binary_sensor.py*](https://github.com/PiotrMachowski/Home-Assistant-custom-components-Burze.dzis.net/raw/master/binary_sensor.py) and [*manifest.json*](https://github.com/PiotrMachowski/Home-Assistant-custom-components-Burze.dzis.net/raw/master/manifest.json) to `config/custom_compoments/burze_dzis_net` directory:
 ```bash
 mkdir -p custom_compoments/burze_dzis_net
 cd custom_compoments/burze_dzis_net
