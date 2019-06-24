@@ -1,0 +1,8 @@
+{
+  "domain": "burze_dzis_net",
+  "name": "Burze.dzis.net",
+  "documentation": "https://github.com/PiotrMachowski/Home-Assistant/tree/master/custom_components/burze_dzis_net",
+  "dependencies": [],
+  "codeowners": ["PiotrMachowski"],
+  "requirements": ["zeep"]
+}
