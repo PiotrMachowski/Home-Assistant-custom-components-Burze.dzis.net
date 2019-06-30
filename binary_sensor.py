@@ -26,6 +26,38 @@ WARNING_TYPES = {
     'storm_warning': ['burza', 'Ostrzeżenie - Burza'],
     'tornado_warning': ['traba', 'Ostrzeżenie - Trąba'],
 }
+WARNING_DESCRIPTIONS = {
+    'frost_warning': {
+        1: "od -20 do -25°C",
+        2: "od -26 do -30°C",
+        3: "poniżej -30°C"
+    },
+    'heat_warning': {
+        1: "od 30 do 34°C",
+        2: "od 35 do 38°C",
+        3: "powyżej 38°C"
+    },
+    'wind_warning': {
+        1: "w porywach od 70 do 90 km/h",
+        2: "w porywach od 91 do 110 km/h",
+        3: "w porywach powyżej 110 km/h"
+    },
+    'precipitation_warning': {
+        1: "deszcz od 25 do 40 mm w ciągu 24 godzin/śnieg od 10 do 15 cm w ciągu 24 godzin",
+        2: "deszcz od 41 do 70 mm w ciągu 24 godzin/śnieg od 16 do 30 cm w ciągu 24 godzin/śnieg od 10 do 15 cm w ciągu 12 godzin",
+        3: "deszcz powyżej 70 mm w ciągu 24 godzin/śnieg powyżej 30 cm w ciągu 24 godzin/śnieg powyżej 15 cm w ciągu 12 godzin"
+    },
+    'storm_warning': {
+        1: "deszcz od 15 do 40 mm/wiatr w porywach od 60 do 90 km/h/grad poniżej 2 cm",
+        2: "deszcz od 41 do 70 mm/wiatr w porywach od 91 do 110 km/h/grad od 2 do 5 cm",
+        3: "wiatr w porywach od 91 do 110 km/h/grad od 2 do 5 cm/deszcz powyżej 70 mm/wiatr w porywach powyżej 110 km/h/grad powyżej 5 cm"
+    },
+    'tornado_warning': {
+        1: "ryzyko niewielkie",
+        2: "ryzyko umiarkowane",
+        3: "ryzyko wysokie"
+    }
+}
 STORM_NEARBY = 'Burze w pobliżu'
 
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
@@ -115,6 +147,7 @@ class BurzeDzisNetWarningsSensor(BurzeDzisNetSensor):
         output = super().device_state_attributes
         if self.is_on:
             output['level'] = self._data[self._warning_key]
+            output['description'] = WARNING_DESCRIPTIONS[self._warning_type][self._data[self._warning_key]]
             output['from'] = str(parse_datetime(self._data[self._warning_key + '_od_dnia'] + 'Z'))
             output['to'] = str(parse_datetime(self._data[self._warning_key + '_do_dnia'] + 'Z'))
         return output
