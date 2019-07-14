@@ -49,12 +49,12 @@ binary_sensor:
 
 ## Instalation
 
-Download [*binary_sensor.py*](https://github.com/PiotrMachowski/Home-Assistant-custom-components-Burze.dzis.net/raw/master/binary_sensor.py) and [*manifest.json*](https://github.com/PiotrMachowski/Home-Assistant-custom-components-Burze.dzis.net/raw/master/manifest.json) to `config/custom_components/burze_dzis_net` directory:
+Download [*binary_sensor.py*](https://github.com/PiotrMachowski/Home-Assistant-custom-components-Burze.dzis.net/raw/master/custom_components/burze_dzis_net/binary_sensor.py) and [*manifest.json*](https://github.com/PiotrMachowski/Home-Assistant-custom-components-Burze.dzis.net/raw/master/custom_components/burze_dzis_net/manifest.json) to `config/custom_components/burze_dzis_net` directory:
 ```bash
 mkdir -p custom_components/burze_dzis_net
 cd custom_components/burze_dzis_net
-wget https://github.com/PiotrMachowski/Home-Assistant-custom-components-Burze.dzis.net/raw/master/binary_sensor.py
-wget https://github.com/PiotrMachowski/Home-Assistant-custom-components-Burze.dzis.net/raw/master/manifest.json
+wget https://github.com/PiotrMachowski/Home-Assistant-custom-components-Burze.dzis.net/raw/master/custom_components/burze_dzis_net/binary_sensor.py
+wget https://github.com/PiotrMachowski/Home-Assistant-custom-components-Burze.dzis.net/raw/master/custom_components/burze_dzis_net/manifest.json
 ```
 
 ## FAQ
