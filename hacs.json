@@ -1,0 +1,5 @@
+{
+  "name": "Burze.dzis.net sensor",
+  "domains": ["binary_sensor"],
+  "country": ["EU", "PL"]
+}
