@@ -1,5 +1,7 @@
 # Burze.dzis.net sensor
 
+[![hacs_badge](https://img.shields.io/badge/HACS-Default-orange.svg)](https://github.com/custom-components/hacs)
+
 This sensor uses official API to get weather warnings from [*Burze.dzis.net*](https://burze.dzis.net/). To get more detailed information about parameters of warnings visit [*official API documentation*](https://burze.dzis.net/soap.php?WSDL).
 
 ## Configuration options
