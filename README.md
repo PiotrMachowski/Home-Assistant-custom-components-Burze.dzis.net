@@ -49,7 +49,7 @@ binary_sensor:
       radius: 30
 ```
 
-## Instalation
+## Installation
 
 Download [*binary_sensor.py*](https://github.com/PiotrMachowski/Home-Assistant-custom-components-Burze.dzis.net/raw/master/custom_components/burze_dzis_net/binary_sensor.py) and [*manifest.json*](https://github.com/PiotrMachowski/Home-Assistant-custom-components-Burze.dzis.net/raw/master/custom_components/burze_dzis_net/manifest.json) to `config/custom_components/burze_dzis_net` directory:
 ```bash
