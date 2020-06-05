@@ -8,7 +8,10 @@ from homeassistant.components.binary_sensor import PLATFORM_SCHEMA, ENTITY_ID_FO
 from homeassistant.const import CONF_NAME, CONF_RADIUS, CONF_API_KEY, ATTR_ATTRIBUTION, CONF_LATITUDE, CONF_LONGITUDE, \
     CONF_SCAN_INTERVAL
 import homeassistant.helpers.config_validation as cv
-from homeassistant.components.binary_sensor import BinarySensorDevice
+try:
+    from homeassistant.components.binary_sensor import BinarySensorEntity
+except ImportError:
+    from homeassistant.components.binary_sensor import BinarySensorDevice as BinarySensorEntity
 from homeassistant.helpers.entity import async_generate_entity_id
 
 _LOGGER = logging.getLogger(__name__)
@@ -109,7 +112,7 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
     async_add_entities(sensors, True)
 
 
-class BurzeDzisNetSensor(BinarySensorDevice):
+class BurzeDzisNetSensor(BinarySensorEntity):
 
     def __init__(self, entity_id, name, updater):
         self.entity_id = entity_id
