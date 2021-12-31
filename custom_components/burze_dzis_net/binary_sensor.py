@@ -121,7 +121,7 @@ class BurzeDzisNetSensor(BinarySensorEntity):
         self._data = None
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         output = dict()
         output[ATTR_ATTRIBUTION] = ATTRIBUTION
         return output
@@ -142,8 +142,8 @@ class BurzeDzisNetWarningsSensor(BurzeDzisNetSensor):
         return data is not None and data[self._warning_key] > 0
 
     @property
-    def device_state_attributes(self):
-        output = super().device_state_attributes
+    def extra_state_attributes(self):
+        output = super().extra_state_attributes
         if self.is_on:
             data = self._updater.ostrzezenia_pogodowe_output
             output['level'] = data[self._warning_key]
@@ -171,8 +171,8 @@ class BurzeDzisNetStormsNearbySensor(BurzeDzisNetSensor):
         return data is not None and data['liczba'] > 0
 
     @property
-    def device_state_attributes(self):
-        output = super().device_state_attributes
+    def extra_state_attributes(self):
+        output = super().extra_state_attributes
         if self.is_on:
             data = self._updater.szukaj_burzy_output
             output['number'] = data['liczba']
