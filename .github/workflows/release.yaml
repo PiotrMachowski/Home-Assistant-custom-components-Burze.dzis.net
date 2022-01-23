@@ -1,0 +1,27 @@
+name: Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  release:
+    name: Prepare release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download repo
+        uses: actions/checkout@v1
+
+      - name: Zip burze_dzis_net dir
+        run: |
+          cd /home/runner/work/Home-Assistant-custom-components-Burze.dzis.net/Home-Assistant-custom-components-Burze.dzis.net/custom_components/burze_dzis_net
+          zip burze_dzis_net.zip -r ./
+
+      - name: Upload zip to release
+        uses: svenstaro/upload-release-action@v1-release
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: /home/runner/work/Home-Assistant-custom-components-Burze.dzis.net/Home-Assistant-custom-components-Burze.dzis.net/custom_components/burze_dzis_net/burze_dzis_net.zip
+          asset_name: burze_dzis_net.zip
+          tag: ${{ github.ref }}
+          overwrite: true
