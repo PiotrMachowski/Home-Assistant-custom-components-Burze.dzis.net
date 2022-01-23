@@ -4,7 +4,7 @@ import logging
 
 from homeassistant.util import Throttle
 from homeassistant.util.dt import parse_datetime
-from homeassistant.components.binary_sensor import PLATFORM_SCHEMA, ENTITY_ID_FORMAT
+from homeassistant.components.binary_sensor import DEVICE_CLASS_SAFETY, PLATFORM_SCHEMA, ENTITY_ID_FORMAT
 from homeassistant.const import CONF_NAME, CONF_RADIUS, CONF_API_KEY, ATTR_ATTRIBUTION, CONF_LATITUDE, CONF_LONGITUDE, \
     CONF_SCAN_INTERVAL
 import homeassistant.helpers.config_validation as cv
@@ -125,6 +125,10 @@ class BurzeDzisNetSensor(BinarySensorEntity):
         output = dict()
         output[ATTR_ATTRIBUTION] = ATTRIBUTION
         return output
+
+    @property
+    def device_class(self):
+        return DEVICE_CLASS_SAFETY
 
     async def async_update(self):
         await self._updater.async_update()
