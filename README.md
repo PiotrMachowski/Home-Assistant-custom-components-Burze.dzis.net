@@ -1,8 +1,26 @@
-# Burze.dzis.net sensor
+[![HACS Default][hacs_shield]][hacs]
+[![GitHub Latest Release][releases_shield]][latest_release]
+[![GitHub All Releases][downloads_total_shield]][releases]
+[![Buy me a coffee][buy_me_a_coffee_shield]][buy_me_a_coffee]
+[![PayPal.Me][paypal_me_shield]][paypal_me]
 
-[![hacs_badge](https://img.shields.io/badge/HACS-Default-orange.svg)](https://github.com/custom-components/hacs)
-[![buymeacoffee_badge](https://img.shields.io/badge/Donate-Buy%20Me%20a%20Coffee-ff813f?style=flat)](https://www.buymeacoffee.com/PiotrMachowski)
-[![paypalme_badge](https://img.shields.io/badge/Donate-PayPal-0070ba?style=flat)](https://paypal.me/PiMachowski)
+
+[hacs_shield]: https://img.shields.io/static/v1.svg?label=HACS&message=Default&style=popout&color=green&labelColor=41bdf5&logo=HomeAssistantCommunityStore&logoColor=white
+[hacs]: https://hacs.xyz/docs/default_repositories
+
+[latest_release]: https://github.com/PiotrMachowski/Home-Assistant-custom-components-Burze.dzis.net/releases/latest
+[releases_shield]: https://img.shields.io/github/release/PiotrMachowski/Home-Assistant-custom-components-Burze.dzis.net.svg?style=popout
+
+[releases]: https://github.com/PiotrMachowski/Home-Assistant-custom-components-Burze.dzis.net/releases
+[downloads_total_shield]: https://img.shields.io/github/downloads/PiotrMachowski/Home-Assistant-custom-components-Burze.dzis.net/total
+
+[buy_me_a_coffee_shield]: https://img.shields.io/static/v1.svg?label=%20&message=Buy%20me%20a%20coffee&color=6f4e37&logo=buy%20me%20a%20coffee&logoColor=white
+[buy_me_a_coffee]: https://www.buymeacoffee.com/PiotrMachowski
+
+[paypal_me_shield]: https://img.shields.io/static/v1.svg?label=%20&message=PayPal.Me&logo=paypal
+[paypal_me]: https://paypal.me/PiMachowski
+
+# Burze.dzis.net sensor
 
 This sensor uses official API to get weather warnings from [*Burze.dzis.net*](https://burze.dzis.net/). To get more detailed information about parameters of warnings visit [*official API documentation*](https://burze.dzis.net/soap.php?WSDL).
 
@@ -53,12 +71,20 @@ binary_sensor:
 
 ## Installation
 
-Download [*binary_sensor.py*](https://github.com/PiotrMachowski/Home-Assistant-custom-components-Burze.dzis.net/raw/master/custom_components/burze_dzis_net/binary_sensor.py) and [*manifest.json*](https://github.com/PiotrMachowski/Home-Assistant-custom-components-Burze.dzis.net/raw/master/custom_components/burze_dzis_net/manifest.json) to `config/custom_components/burze_dzis_net` directory:
+### Using [HACS](https://hacs.xyz/) (recommended)
+
+This integration can be installed using HACS.
+To do it search for `Burze.dzis.net` in *Integrations* section.
+
+### Manual
+
+To install this integration manually you have to download [*burze_dzis_net.zip*](https://github.com/PiotrMachowski/Home-Assistant-custom-components-Burze.dzis.net/releases/latest/download/burze_dzis_net.zip) and extract its contents to `config/custom_components/burze_dzis_net` directory:
 ```bash
 mkdir -p custom_components/burze_dzis_net
 cd custom_components/burze_dzis_net
-wget https://github.com/PiotrMachowski/Home-Assistant-custom-components-Burze.dzis.net/raw/master/custom_components/burze_dzis_net/binary_sensor.py
-wget https://github.com/PiotrMachowski/Home-Assistant-custom-components-Burze.dzis.net/raw/master/custom_components/burze_dzis_net/manifest.json
+wget https://github.com/PiotrMachowski/Home-Assistant-custom-components-Burze.dzis.net/releases/latest/download/burze_dzis_net.zip
+unzip burze_dzis_net.zip
+rm burze_dzis_net.zip
 ```
 
 ## FAQ
@@ -75,3 +101,4 @@ wget https://github.com/PiotrMachowski/Home-Assistant-custom-components-Burze.dz
   ```
 
 <a href="https://www.buymeacoffee.com/PiotrMachowski" target="_blank"><img src="https://bmc-cdn.nyc3.digitaloceanspaces.com/BMC-button-images/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
+<a href="https://paypal.me/PiMachowski" target="_blank"><img src="https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_37x23.jpg" border="0" alt="PayPal Logo" style="height: auto !important;width: auto !important;"></a>
