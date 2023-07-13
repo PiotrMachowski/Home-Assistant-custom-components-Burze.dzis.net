@@ -1,6 +1,5 @@
 {
   "name": "Burze.dzis.net sensor",
-  "country": ["EU", "PL"],
   "render_readme": true,
   "zip_release": true,
   "filename": "antistorm.zip"
