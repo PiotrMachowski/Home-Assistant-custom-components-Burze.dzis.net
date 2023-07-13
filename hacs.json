@@ -1,6 +1,5 @@
 {
   "name": "Burze.dzis.net sensor",
-  "domains": ["binary_sensor"],
   "country": ["EU", "PL"],
   "render_readme": true,
   "zip_release": true,

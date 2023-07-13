@@ -2,28 +2,24 @@
   "config": {
     "step": {
       "user": {
-        "title": "Burze.dzis.net",
         "description": "Podaj klucz API wygenerowany na stronie [burze.dzis.net](https://burze.dzis.net/?page=api_interfejs).",
         "data": {
           "api_key": "Klucz API"
         }
       },
       "use_home_location": {
-        "title": "Burze.dzis.net",
         "description": "Wybierz, czy chcesz pobierać dane dla lokalizacji domu.",
         "data": {
           "use_home_coordinates": "Użyj lokalizacji domu"
         }
       },
       "location": {
-        "title": "Burze.dzis.net",
         "description": "Wybierz lokalizację, dla której mają być sprawdzane dane.",
         "data": {
           "location": "Lokalizacja"
         }
       },
       "radius": {
-        "title": "Burze.dzis.net",
         "description": "Wybierz w jakim promieniu mają być wykrywane wyładowania atmosferyczne.",
         "data": {
           "radius": "Promień"

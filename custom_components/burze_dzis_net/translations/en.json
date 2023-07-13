@@ -2,28 +2,24 @@
   "config": {
     "step": {
       "user": {
-        "title": "Burze.dzis.net",
         "description": "Provide an API key retrieved on [burze.dzis.net](https://burze.dzis.net/?page=api_interfejs) website.",
         "data": {
           "api_key": "API key"
         }
       },
       "use_home_location": {
-        "title": "Burze.dzis.net",
         "description": "Choose if you want to use location of home or a custom location.",
         "data": {
           "use_home_coordinates": "Use home location"
         }
       },
       "location": {
-        "title": "Burze.dzis.net",
         "description": "Choose a location to track.",
         "data": {
           "location": "Location"
         }
       },
       "radius": {
-        "title": "Burze.dzis.net",
         "description": "Choose a radius for storm detections.",
         "data": {
           "radius": "Radius"
