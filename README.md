@@ -19,13 +19,25 @@
 
 # Burze.dzis.net sensor
 
-This sensor uses official API to get weather warnings from [*Burze.dzis.net*](https://burze.dzis.net/). To get more detailed information about parameters of warnings visit [*official API documentation*](https://burze.dzis.net/soap.php?WSDL).
+This integration uses official API to get weather warnings from [*Burze.dzis.net*](https://burze.dzis.net/).
+
+It retrieves following data:
+  - frost hazard
+  - heat hazard
+  - wind hazard
+  - precipitation hazard
+  - storm hazard
+  - tornado hazard
+  - detected lightnings
+  - gamma radiation level (for Warsaw)
+
+To get more detailed information about parameters of warnings you can check out [*official API documentation*](https://burze.dzis.net/soap.php?WSDL).
 
 ## Configuration
 
 To configure this integration go to: _Configuration_ -> _Integrations_ -> _Add integration_ -> _Burze.dzis.net_.
 
-You can also use following [My Home Assistant](http://my.home-assistant.io/) link
+You can also use following [My Home Assistant](http://my.home-assistant.io/) link:
 
 [![Open your Home Assistant instance and start setting up a new integration.](https://my.home-assistant.io/badges/config_flow_start.svg)](https://my.home-assistant.io/redirect/config_flow_start/?domain=burze_dzis_net)
 
