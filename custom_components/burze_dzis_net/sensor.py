@@ -1,16 +1,15 @@
 import asyncio
 import datetime
 import logging
-from typing import Mapping
+from typing import Any, Mapping
 
-from homeassistant.components.binary_sensor import BinarySensorDeviceClass
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.util.dt import parse_datetime
-from homeassistant.components.binary_sensor import BinarySensorEntity
+from homeassistant.components.sensor import SensorEntity, SensorStateClass
 
-from .const import (DOMAIN, STORM_NEARBY, WARNING_DESCRIPTIONS, WARNING_TYPES)
+from .const import (DOMAIN, GAMMA_RADIATION, STORM_NEARBY, WARNING_DESCRIPTIONS, WARNING_TYPES)
 from .update_coordinator import BurzeDzisNetUpdateCoordinator
 from .entity import BurzeDzisNetEntity
 
@@ -21,49 +20,43 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
     coordinator: BurzeDzisNetUpdateCoordinator = hass.data[DOMAIN][entry.entry_id]
     entities = []
     for warning_type in WARNING_TYPES.keys():
-        entities.append(BurzeDzisNetWarningPresentBinarySensor(coordinator, entry, warning_type))
-        entities.append(BurzeDzisNetWarningActiveBinarySensor(coordinator, entry, warning_type))
-    entities.append(BurzeDzisNetStormNearbyBinarySensor(coordinator, entry))
+        entities.append(BurzeDzisNetPresentWarningLevelSensor(coordinator, entry, warning_type))
+        entities.append(BurzeDzisNetActiveWarningLevelSensor(coordinator, entry, warning_type))
+    entities.append(BurzeDzisNetStormNearbySensor(coordinator, entry))
+    entities.append(BurzeDzisNetGammaRadiationSensor(coordinator, entry))
     async_add_entities(entities)
 
 
-class BurzeDzisNetBinarySensor(BinarySensorEntity, BurzeDzisNetEntity):
+class BurzeDzisNetSensor(SensorEntity, BurzeDzisNetEntity):
     def __init__(self, coordinator: BurzeDzisNetUpdateCoordinator, config_entry: ConfigEntry):
         super().__init__(coordinator, config_entry)
 
     @property
-    def device_class(self):
-        return BinarySensorDeviceClass.SAFETY
-
-    @property
     def unique_id(self):
-        return f"{super().unique_id}_binary_sensor"
+        return f"{super().unique_id}_sensor"
 
 
-class BurzeDzisNetWarningPresentBinarySensor(BurzeDzisNetBinarySensor):
+class BurzeDzisNetPresentWarningLevelSensor(BurzeDzisNetSensor):
 
     def __init__(self, coordinator: BurzeDzisNetUpdateCoordinator, config_entry: ConfigEntry, warning_type: str):
         super().__init__(coordinator, config_entry)
         self._warning_type = warning_type
         self._warning_key = WARNING_TYPES[self._warning_type][0]
+        self._attr_entity_registry_enabled_default = False
 
     @property
-    def is_on(self) -> bool:
+    def native_value(self) -> Any:
         data = self.get_data()
-        return (data is not None
-                and data.ostrzezenia_pogodowe is not None
-                and self._warning_key in data.ostrzezenia_pogodowe
-                and data.ostrzezenia_pogodowe[self._warning_key] > 0)
-
-    @property
-    def available(self) -> bool:
-        return super().available and self.get_data() is not None and self.get_data().ostrzezenia_pogodowe is not None
+        if (data is not None
+                and self._warning_key in data.ostrzezenia_pogodowe):
+            return data.ostrzezenia_pogodowe[self._warning_key]
+        return None
 
     @property
     def extra_state_attributes(self) -> Mapping[str, str]:
         output = super().extra_state_attributes
         data = self.get_data().ostrzezenia_pogodowe
-        if self.is_on and data is not None:
+        if self.state is not None and self.state > 0 and data is not None:
             output['level'] = data[self._warning_key]
             output['description'] = WARNING_DESCRIPTIONS[self._warning_type][data[self._warning_key]]
             output['from'] = str(parse_datetime(data[self._warning_key + '_od_dnia'] + 'Z'))
@@ -71,8 +64,12 @@ class BurzeDzisNetWarningPresentBinarySensor(BurzeDzisNetBinarySensor):
         return output
 
     @property
+    def available(self) -> bool:
+        return super().available and self.get_data() is not None and self.get_data().ostrzezenia_pogodowe is not None
+
+    @property
     def unique_id(self):
-        return f"{super().unique_id}_warning_present_{self._warning_type}"
+        return f"{super().unique_id}_present_warning_level_{self._warning_type}"
 
     @property
     def icon(self):
@@ -80,23 +77,30 @@ class BurzeDzisNetWarningPresentBinarySensor(BurzeDzisNetBinarySensor):
 
     @property
     def name(self):
-        return f"{self.base_name()} {WARNING_TYPES[self._warning_type][2]}"
+        return f"{self.base_name()} {WARNING_TYPES[self._warning_type][4]}"
+
+    @property
+    def native_unit_of_measurement(self) -> str:
+        return " "
 
 
-class BurzeDzisNetWarningActiveBinarySensor(BurzeDzisNetWarningPresentBinarySensor):
+class BurzeDzisNetActiveWarningLevelSensor(BurzeDzisNetPresentWarningLevelSensor):
 
     def __init__(self, coordinator: BurzeDzisNetUpdateCoordinator, config_entry: ConfigEntry, warning_type: str):
         super().__init__(coordinator, config_entry, warning_type)
 
     @property
-    def is_on(self) -> bool:
-        is_present = super().is_on
+    def native_value(self) -> float:
+        super_state = super().native_value
+        is_present = super_state is not None and super_state > 0
         if is_present:
             data = self.get_data().ostrzezenia_pogodowe
             start = parse_datetime(data[self._warning_key + '_od_dnia'] + 'Z')
             end = parse_datetime(data[self._warning_key + '_do_dnia'] + 'Z')
-            return start <= datetime.datetime.now(tz=start.tzinfo) <= end
-        return False
+            if start <= datetime.datetime.now(tz=start.tzinfo) <= end:
+                return super_state
+            return 0
+        return 0
 
     def should_poll(self) -> bool:
         return True
@@ -110,25 +114,28 @@ class BurzeDzisNetWarningActiveBinarySensor(BurzeDzisNetWarningPresentBinarySens
 
     @property
     def name(self):
-        return f"{self.base_name()} {WARNING_TYPES[self._warning_type][3]}"
+        return f"{self.base_name()} {WARNING_TYPES[self._warning_type][5]}"
 
 
-class BurzeDzisNetStormNearbyBinarySensor(BurzeDzisNetBinarySensor):
+class BurzeDzisNetStormNearbySensor(BurzeDzisNetSensor):
 
     def __init__(self, coordinator: BurzeDzisNetUpdateCoordinator, config_entry: ConfigEntry):
         super().__init__(coordinator, config_entry)
+        self._attr_entity_registry_enabled_default = False
 
     @property
-    def is_on(self):
+    def native_value(self):
         data = self.get_data()
-        return (data is not None
+        if (data is not None
                 and data.szukaj_burzy is not None
-                and data.szukaj_burzy['liczba'] > 0)
+                and 'liczba' in data.szukaj_burzy):
+            return data.szukaj_burzy['liczba']
+        return 0
 
     @property
     def extra_state_attributes(self) -> dict:
         output = super().extra_state_attributes
-        if self.is_on:
+        if self.native_value is not None and self.native_value > 0:
             data = self.get_data().szukaj_burzy
             output['number'] = data['liczba']
             output['distance'] = data['odleglosc']
@@ -142,7 +149,7 @@ class BurzeDzisNetStormNearbyBinarySensor(BurzeDzisNetBinarySensor):
 
     @property
     def name(self):
-        return f"{self.base_name()} {STORM_NEARBY[1]}"
+        return f"{self.base_name()} {STORM_NEARBY[2]}"
 
     @property
     def icon(self):
@@ -151,3 +158,43 @@ class BurzeDzisNetStormNearbyBinarySensor(BurzeDzisNetBinarySensor):
     @property
     def unique_id(self):
         return f"{super().unique_id}_storm_nearby"
+
+    @property
+    def state_class(self) -> SensorStateClass:
+        return SensorStateClass.MEASUREMENT
+
+
+class BurzeDzisNetGammaRadiationSensor(BurzeDzisNetSensor):
+    def __init__(self, coordinator: BurzeDzisNetUpdateCoordinator, config_entry: ConfigEntry):
+        super().__init__(coordinator, config_entry)
+
+    @property
+    def unique_id(self):
+        return f"{super().unique_id}_gamma_radiation"
+
+    @property
+    def native_value(self) -> Any:
+        data = self.get_data()
+        if data is not None:
+            return data.promieniowanie
+        return None
+
+    @property
+    def available(self) -> bool:
+        return super().available and self.get_data() is not None and self.get_data().promieniowanie is not None
+
+    @property
+    def name(self):
+        return f"{self.base_name()} {GAMMA_RADIATION[0]}"
+
+    @property
+    def icon(self):
+        return GAMMA_RADIATION[1]
+
+    @property
+    def native_unit_of_measurement(self) -> str:
+        return "µSv/h"
+
+    @property
+    def state_class(self) -> SensorStateClass:
+        return SensorStateClass.MEASUREMENT
