@@ -20,7 +20,7 @@
         }
       },
       "radius": {
-        "description": "Wybierz w jakim promieniu mają być wykrywane wyładowania atmosferyczne.",
+        "description": "Wybierz w jakim promieniu (w kilometrach) mają być wykrywane wyładowania atmosferyczne.",
         "data": {
           "radius": "Promień"
         }

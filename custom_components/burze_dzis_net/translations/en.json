@@ -20,7 +20,7 @@
         }
       },
       "radius": {
-        "description": "Choose a radius for storm detections.",
+        "description": "Choose a radius (in kilometers) for storm detections.",
         "data": {
           "radius": "Radius"
         }

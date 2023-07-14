@@ -66,7 +66,13 @@ rm burze_dzis_net.zip
   
   To get API key you have to follow steps available at [*official project page*](https://burze.dzis.net/?page=api_interfejs).
 
+* **What is a difference between "normal" and "active" sensors?**
+  
+  Weather warnings published on burze.dzis.net portal have start and end time.
 
+  "Normal" sensors indicate that there is a weather warning (possibly in the future).
+  
+  "Active" sensors indicate that there is a warning and it is in its active state at this moment (between start and end times).
 
 <!-- piotrmachowski_support_links_start -->
 
