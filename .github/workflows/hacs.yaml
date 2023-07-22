@@ -27,4 +27,3 @@ jobs:
         uses: hacs/action@main
         with:
           CATEGORY: integration
-          ignore: brands
