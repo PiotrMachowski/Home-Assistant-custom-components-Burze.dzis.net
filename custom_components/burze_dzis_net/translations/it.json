@@ -1,0 +1,34 @@
+{
+"config": {
+"step": {
+"user": {
+"description": "Fornisci una chiave API recuperata su [burze.dzis.net](https://burze.dzis.net/?page=api_interfejs) website.",
+"data": {
+"api_key": "Chiave API"
+}
+},
+"use_home_location": {
+"description": "Scegli se desideri utilizzare la posizione di casa o una posizione personalizzata.",
+"data": {
+"use_home_coordinates": "Usa la posizione di casa"
+}
+},
+"location": {
+"description": "
+Scegli una posizione da monitorare.",
+"data": {
+"location": "Posizione"
+}
+},
+"radius": {
+"description": "Scegli un raggio (in chilometri) per i rilevamenti delle tempeste.",
+"data": {
+"radius": "Raggio"
+}
+}
+},
+"error": {
+"invalid_api_key": "Chiave API non valida"
+}
+}
+}
